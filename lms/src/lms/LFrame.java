@@ -5,7 +5,7 @@ import javax.swing.JFrame;
 public class LFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
 	
-	private LPanel lPanel;
+	private LMainPanel lMainPanel;
 	
 	public LFrame() {
 		// set attributes
@@ -13,9 +13,9 @@ public class LFrame extends JFrame {
 		this.setSize(400, 600);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
-		// components
-		this.lPanel = new LPanel();
-		this.add(this.lPanel);
+		// set components
+		this.lMainPanel = new LMainPanel();
+		this.add(this.lMainPanel);
 	}
 
 }
