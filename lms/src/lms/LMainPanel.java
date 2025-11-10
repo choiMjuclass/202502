@@ -1,5 +1,7 @@
 package lms;
 
+import java.util.Vector;
+
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
@@ -8,9 +10,9 @@ public class LMainPanel extends JPanel {
 	
 	private LSelectionPanel lSelectionPanel;
 	private LControlPanel lControlPanel1;
-	private LBasket lMiridamgi;
+	private LTable lMiridamgi;
 	private LControlPanel lControlPanel2;
-	private LBasket lSincheong;
+	private LTable lSincheong;
 	
 	public LMainPanel() {
 		this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
@@ -21,13 +23,21 @@ public class LMainPanel extends JPanel {
 		this.lControlPanel1 = new LControlPanel();
 		this.add(this.lControlPanel1);
 		
-		this.lMiridamgi = new LBasket();
+		Vector<String> header = new Vector<String>();
+		header.add("강좌명");	
+		header.add("학점");	
+		header.add("시간");	
+		this.lMiridamgi = new LTable(header);
 		this.add(this.lMiridamgi);
 		
 		this.lControlPanel2 = new LControlPanel();
 		this.add(this.lControlPanel2);
 		
-		this.lSincheong = new LBasket();
+		header = new Vector<String>();
+		header.add("강좌명");	
+		header.add("학점");	
+		header.add("시간");	
+		this.lSincheong = new LTable(header);
 		this.add(this.lSincheong);
 	}
 
