@@ -9,8 +9,8 @@ public class LFrame extends JFrame {
 	
 	public LFrame() {
 		// set attributes
-		this.setLocation(400, 100);
-		this.setSize(800, 400);
+		this.setLocation(LConstants.LFRAME_X, LConstants.LFRAME_Y);
+		this.setSize(LConstants.LFRAME_W, LConstants.LFRAME_H);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
 		// set components

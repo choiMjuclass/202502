@@ -5,6 +5,8 @@ import java.util.Vector;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
+import lms.LConstants.EGangjwa;
+
 public class LSelectionPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	
@@ -15,25 +17,25 @@ public class LSelectionPanel extends JPanel {
 			indexPanel.setLayout(new BoxLayout(indexPanel, BoxLayout.X_AXIS));			
 			Vector<String> header;			
 			header = new Vector<String>();
-			header.add("캠퍼스");		
+			header.add("lCampus");		
 			LTable lCampus = new LTable(header);		
 			indexPanel.add(lCampus);
 			
 			header = new Vector<String>();
-			header.add("대학");		
+			header.add("lCampus");		
 			LTable lCollege = new LTable(header);		
 			indexPanel.add(lCollege);
 			
 			header = new Vector<String>();
-			header.add("학과");		
+			header.add("lDepartment");		
 			LTable lDepartment = new LTable(header);		
 			indexPanel.add(lDepartment);			
 		this.add(indexPanel);	
 		
 		header = new Vector<String>();
-		header.add("강좌명");	
-		header.add("학점");	
-		header.add("시간");	
+		for (EGangjwa eGangjwa: EGangjwa.values()) {
+			header.add(eGangjwa.getText());
+		}
 		LTable lLecture = new LTable(header);		
 		this.add(lLecture);
 	}

@@ -5,6 +5,8 @@ import java.util.Vector;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
+import lms.LConstants.EGangjwa;
+
 public class LMainPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	
@@ -24,9 +26,10 @@ public class LMainPanel extends JPanel {
 		this.add(this.lControlPanel1);
 		
 		Vector<String> header = new Vector<String>();
-		header.add("강좌명");	
-		header.add("학점");	
-		header.add("시간");	
+		for (EGangjwa eGangjwa: EGangjwa.values()) {
+			header.add(eGangjwa.getText());
+		}
+
 		this.lMiridamgi = new LTable(header);
 		this.add(this.lMiridamgi);
 		
@@ -34,9 +37,9 @@ public class LMainPanel extends JPanel {
 		this.add(this.lControlPanel2);
 		
 		header = new Vector<String>();
-		header.add("강좌명");	
-		header.add("학점");	
-		header.add("시간");	
+		for (EGangjwa eGangjwa: EGangjwa.values()) {
+			header.add(eGangjwa.getText());
+		}
 		this.lSincheong = new LTable(header);
 		this.add(this.lSincheong);
 	}

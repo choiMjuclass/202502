@@ -10,7 +10,6 @@ public class LMain {
 		this.lFrame.setVisible(true);
 	}
 	
-	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		LMain lMain = new LMain();
