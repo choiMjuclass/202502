@@ -9,22 +9,29 @@ import javax.swing.table.DefaultTableModel;
 public class LTable extends JScrollPane {
 	private static final long serialVersionUID = 1L;
 
-
+	private JTable table;
+	private DefaultTableModel tableModel;
+	
 	public LTable(Vector<String> header) {
-		
-		JTable table = new JTable();		
-		DefaultTableModel tableModel = new DefaultTableModel(null, header);
-		table.setModel(tableModel);
-		
-		this.setViewportView(table);
-		
-		Vector<String> row = new Vector<String>();
-		row.add("data");
-
-		tableModel.setNumRows(0);
-		for (int i=0; i<3; i++) {
-			tableModel.addRow(row);		
-		}
+		// create a table
+		table = new JTable();
+		// create a table model
+		tableModel = new DefaultTableModel(null, header);
+		// bind
+		table.setModel(tableModel);	
+		// place a table
+		this.setViewportView(table);	
 	}
 
+	public void update(String fileName) {	
+		LDataAccessObject dao = new LDataAccessObject();
+		Vector<String> vRows = dao.findAll(fileName);
+
+		tableModel.setNumRows(0);
+		for (String line: vRows) {
+			String[] row = new String[1];
+			row[0] = line.split(" ")[1];
+			tableModel.addRow(row);		
+		}		
+	}
 }
