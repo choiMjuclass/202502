@@ -11,26 +11,30 @@ import lms.LConstants.EIndexName;
 public class LSelectionPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	
+	private LTable lCampus;
+	private LTable lCollege;
+	private LTable lDepartment;
+	private LTable lLecture;
+	
 	public LSelectionPanel() {
 		
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));		
 		JPanel indexPanel = new JPanel();		
 			indexPanel.setLayout(new BoxLayout(indexPanel, BoxLayout.X_AXIS));			
-			Vector<String> header;			
-			header = new Vector<String>();
-			header.add(EIndexName.eCampus.getText());		
-			LTable lCampus = new LTable(header);
+			Vector<String> header  = new Vector<String>();
+			header.add(EIndexName.eCampus.getText());
+			this.lCampus = new LTable(header);
 			lCampus.update("root");
 			indexPanel.add(lCampus);
 			
 			header = new Vector<String>();
 			header.add(EIndexName.eCollege.getText());		
-			LTable lCollege = new LTable(header);		
+			this.lCollege = new LTable(header);		
 			indexPanel.add(lCollege);
 			
 			header = new Vector<String>();
 			header.add(EIndexName.eDepartment.getText());		
-			LTable lDepartment = new LTable(header);		
+			this.lDepartment = new LTable(header);		
 			indexPanel.add(lDepartment);			
 		this.add(indexPanel);	
 		
@@ -38,7 +42,11 @@ public class LSelectionPanel extends JPanel {
 		for (EGangjwa eGangjwa: EGangjwa.values()) {
 			header.add(eGangjwa.getText());
 		}
-		LTable lLecture = new LTable(header);		
-		this.add(lLecture);
+		this.lLecture = new LTable(header);		
+		this.add(this.lLecture);
+		
+		this.lCampus.associate(this.lCollege);
+		this.lCollege.associate(this.lDepartment);
+		this.lDepartment.associate(this.lLecture);
 	}
 }
