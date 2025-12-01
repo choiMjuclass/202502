@@ -5,9 +5,9 @@ import java.util.Vector;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
-import lms.LConstants.EGangjwaColumn;
-import lms.LConstants.EIndexColumn;
+import lms.LConstants.EGangjwa;
 import lms.LConstants.ETable;
+import lms.LConstants.IColumn;
 
 public class LSelectionPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
@@ -15,42 +15,34 @@ public class LSelectionPanel extends JPanel {
 	private LTable lCampus;
 	private LTable lCollege;
 	private LTable lDepartment;
-	private LTable lLecture;
+	private LTable lGangjwa;
 	
 	public LSelectionPanel() {
 		
-		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));	
-		JPanel indexPanel = new JPanel();	
+		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));		
+		JPanel indexPanel = new JPanel();		
 			indexPanel.setLayout(new BoxLayout(indexPanel, BoxLayout.X_AXIS));
 			
-			Vector<Integer> columnsProjected = new Vector<Integer>();
-			columnsProjected.add(EIndexColumn.eName.ordinal());
-			
-			this.lCampus = new LTable(ETable.eCampus, columnsProjected);
+			this.lCampus = new LTable(ETable.eCampus);
 			indexPanel.add(lCampus);
 			
-			this.lCollege = new LTable(ETable.eCollege, columnsProjected);		
+			this.lCollege = new LTable(ETable.eCollege);		
 			indexPanel.add(lCollege);
 			
-			this.lDepartment = new LTable(ETable.eDepartment, columnsProjected);		
-			indexPanel.add(lDepartment);				
-			
+			this.lDepartment = new LTable(ETable.eDepartment);		
+			indexPanel.add(lDepartment);			
 		this.add(indexPanel);	
 		
-		columnsProjected = new Vector<Integer>();
-		for (int i=0; i<EGangjwaColumn.values().length; i++) {
-			columnsProjected.add(i);
-		}
-		this.lLecture = new LTable(ETable.eSelection, columnsProjected);		
-		this.add(lLecture);		
+		this.lGangjwa = new LTable(ETable.eGangjwa);		
+		this.add(this.lGangjwa);
 	}
-	
+
 	public void initialize() {
-		this.lCampus.initialize(lCollege);
-		this.lCollege.initialize(lDepartment);
-		this.lDepartment.initialize(lLecture);
-		this.lLecture.initialize(null);
+		this.lCampus.initialize(this.lCollege);
+		this.lCollege.initialize(this.lDepartment);
+		this.lDepartment.initialize(this.lGangjwa);
+		this.lGangjwa.initialize(null);
 		
-		lCampus.update("root");		
+		lCampus.update(LConstants.FILENAME_ROOT);
 	}
 }

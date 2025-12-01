@@ -19,8 +19,6 @@ public class LControlPanel extends JPanel {
 		this.rButton = new JButton(">>");
 		this.add(this.rButton);
 	}
-	
-	public void initialize() {
-	}
+
 
 }
