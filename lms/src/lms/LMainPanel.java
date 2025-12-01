@@ -6,6 +6,8 @@ import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
 import lms.LConstants.EGangjwa;
+import lms.LConstants.EIndex;
+import lms.LConstants.IColumn;
 
 public class LMainPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
@@ -17,31 +19,34 @@ public class LMainPanel extends JPanel {
 	private LTable lSincheong;
 	
 	public LMainPanel() {
+		// attributes
 		this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 		
+		// components
 		this.lSelectionPanel = new LSelectionPanel();
 		this.add(this.lSelectionPanel);
 		
 		this.lControlPanel1 = new LControlPanel();
 		this.add(this.lControlPanel1);
-		
-		Vector<String> header = new Vector<String>();
-		for (EGangjwa eGangjwa: EGangjwa.values()) {
-			header.add(eGangjwa.getText());
-		}
 
-		this.lMiridamgi = new LTable(header);
+		Vector<IColumn> iColumns  = new Vector<IColumn>();
+		iColumns.add(EIndex.eName);
+		
+		this.lMiridamgi = new LTable(iColumns);
 		this.add(this.lMiridamgi);
 		
 		this.lControlPanel2 = new LControlPanel();
 		this.add(this.lControlPanel2);
 		
-		header = new Vector<String>();
-		for (EGangjwa eGangjwa: EGangjwa.values()) {
-			header.add(eGangjwa.getText());
-		}
-		this.lSincheong = new LTable(header);
+		this.lSincheong = new LTable(iColumns);
 		this.add(this.lSincheong);
 	}
 
+	public void initialize() {
+		this.lSelectionPanel.initialize();
+//		this.lControlPanel1.initialize();
+//		this.lMiridamgi.initialize();
+//		this.lControlPanel2.initialize();
+//		this.lSincheong.initialize();		
+	}
 }

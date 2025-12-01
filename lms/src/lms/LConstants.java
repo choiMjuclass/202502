@@ -20,7 +20,12 @@ public class LConstants {
 		}
 	}
 	
-	public enum EIndex {
+	public interface IColumn {
+		public String getText();
+		public int getIndex();
+	}
+	
+	public enum EIndex  implements IColumn {
 		eId("아이디"),
 		eName("이름"),
 		eFileName("파일명");
@@ -32,8 +37,11 @@ public class LConstants {
 		public String getText() {
 			return this.text;
 		}
+		public int getIndex() {
+			return this.ordinal();
+		}
 	}
-	public enum EGangjwa {
+	public enum EGangjwa  implements IColumn {
 		eId("아이디"),
 		eName("강좌명"),
 		eLecturer("강사"),
@@ -46,6 +54,9 @@ public class LConstants {
 		}
 		public String getText() {
 			return this.text;
+		}
+		public int getIndex() {
+			return this.ordinal();
 		}
 	}
 }

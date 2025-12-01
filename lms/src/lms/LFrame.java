@@ -17,5 +17,9 @@ public class LFrame extends JFrame {
 		this.lMainPanel = new LMainPanel();
 		this.add(this.lMainPanel);
 	}
-
+	
+	public void initialize() {
+		// set associations
+		this.lMainPanel.initialize();
+	}
 }
