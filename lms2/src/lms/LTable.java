@@ -8,83 +8,79 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
-import lms.LConstants.EIndex;
-import lms.LConstants.ETable;
 import lms.LConstants.IColumn;
 
-public class LTable extends JScrollPane {
+public abstract class LTable extends JScrollPane {
 	private static final long serialVersionUID = 1L;
 
 	private JTable table;
 	private DefaultTableModel tableModel;
+	private ListSelectionHandler listSelectionHandler;
 	
 	private Vector<String> vRows;
-	private ETable eTable;
-	private LTable next;
+	private Vector<IColumn> iColumns;
 	
-	public LTable(ETable eTable) {
-		this.eTable = eTable;
-		// create a header and bind
-		Vector<String> header = new Vector<String>();
-		for (IColumn eColumn: this.eTable.getIColumns()) {
-			header.add(eColumn.getText());
-		}
-		this.tableModel = new DefaultTableModel(null, header);
-		
+	public LTable(Vector<IColumn> iColumns) {
+		this.iColumns = iColumns;
 		// create a table
 		this.table = new JTable();
-		this.table.getSelectionModel().addListSelectionListener(new ListSelectionHandler());
-		this.table.setModel(tableModel);	
-		
-		// place a table
-		this.setViewportView(table);		
-
-		// set preferred size
-		int i=0;
-		for (IColumn eColumn: this.eTable.getIColumns()) {
-			this.table.getColumnModel().getColumn(i++).setPreferredWidth(eColumn.getPreferredWidth());
+		// create a table model
+		Vector<String> header = new Vector<String>();
+		for (IColumn column: this.iColumns) {
+			header.add(column.getText());
 		}
+		this.tableModel = new DefaultTableModel(null, header);
+		this.table.setModel(tableModel);
+		// add listener
+		// create a table
+		this.listSelectionHandler = new ListSelectionHandler();
+		this.getTable().getSelectionModel().addListSelectionListener(listSelectionHandler);
+
+		// place a table
+		this.setViewportView(table);
+		
+		// initialize vRows
+		this.vRows = new Vector<String>();
 	}
-	public void initialize(LTable next) {
-		this.next = next;
+	public void initialize() {
 	}
 	
-	public void update(String fileName) {	
-		// get data from file
-		LDataAccessObject dao = new LDataAccessObject();
-		this.vRows = dao.findAll(fileName);
-
+	protected JTable getTable() {
+		return this.table;
+	}
+	protected Vector<String> getVRows() {
+		return this.vRows;
+	}
+	
+	public void redraw() {
 		// project 
 		tableModel.setNumRows(0);
-		for (String line: vRows) {
+		for (String line: this.vRows) {
 			String[] row  = line.split(" ");
-			Vector<String> projectRow = new Vector<String>();
-			for (IColumn column: this.eTable.getIColumns()) {
-				projectRow.add(row[column.getOrdianl()]);
+			Vector<String> projectedRow = new Vector<String>();
+			for (IColumn iColumn: this.iColumns) {
+				projectedRow.add(row[iColumn.getIndex()]);
 			}
-			tableModel.addRow(projectRow);		
+			tableModel.addRow(projectedRow);		
 		}
 		this.table.changeSelection(0, 0, true, false);
 	}
 	
-	public void updateNext() {
-		if (this.next != null) {
-	        int[] selectedRows = table.getSelectedRows();
-	        if (selectedRows.length > 0) {
-	        	String line = this.vRows.get(selectedRows[0]);
-				String[] row = line.split(" ");
-	   			String fileName = row[EIndex.eFileName.ordinal()];
-	   			this.next.update(fileName);
-	        }       	
-        }
+	public void setVRowsFromFile(String fileName) {
+		// get data from file
+		LDataAccessObject dao = new LDataAccessObject();
+		this.getVRows().addAll(dao.findAll(fileName));	
 	}
+	
+	public void select() {}
 	
 	private class ListSelectionHandler implements ListSelectionListener {
 		@Override
 		public void valueChanged(ListSelectionEvent e) {
 			if (!e.getValueIsAdjusting()) {
-				updateNext();
+				select();
 			}
 		}
 	}
+
 }

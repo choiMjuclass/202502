@@ -6,16 +6,17 @@ import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
 import lms.LConstants.EGangjwa;
-import lms.LConstants.ETable;
+import lms.LConstants.EIndex;
+import lms.LConstants.EIndexName;
 import lms.LConstants.IColumn;
 
 public class LSelectionPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	
-	private LTable lCampus;
-	private LTable lCollege;
-	private LTable lDepartment;
-	private LTable lGangjwa;
+	private LIndex lCampus;
+	private LIndex lCollege;
+	private LIndex lDepartment;
+	private LLecture lLecture;
 	
 	public LSelectionPanel() {
 		
@@ -23,26 +24,30 @@ public class LSelectionPanel extends JPanel {
 		JPanel indexPanel = new JPanel();		
 			indexPanel.setLayout(new BoxLayout(indexPanel, BoxLayout.X_AXIS));
 			
-			this.lCampus = new LTable(ETable.eCampus);
+			Vector<IColumn> iColumns  = new Vector<IColumn>();
+			iColumns.add(EIndex.eName);
+			
+			this.lCampus = new LIndex(iColumns);
 			indexPanel.add(lCampus);
 			
-			this.lCollege = new LTable(ETable.eCollege);		
+			this.lCollege = new LIndex(iColumns);		
 			indexPanel.add(lCollege);
 			
-			this.lDepartment = new LTable(ETable.eDepartment);		
+			this.lDepartment = new LIndex(iColumns);		
 			indexPanel.add(lDepartment);			
 		this.add(indexPanel);	
 		
-		this.lGangjwa = new LTable(ETable.eGangjwa);		
-		this.add(this.lGangjwa);
+		this.lLecture = new LLecture(iColumns);		
+		this.add(this.lLecture);
 	}
 
 	public void initialize() {
 		this.lCampus.initialize(this.lCollege);
 		this.lCollege.initialize(this.lDepartment);
-		this.lDepartment.initialize(this.lGangjwa);
-		this.lGangjwa.initialize(null);
+		this.lDepartment.initialize(this.lLecture);
+		this.lLecture.initialize();
 		
-		lCampus.update(LConstants.FILENAME_ROOT);
+		lCampus.setVRowsFromFile("root");
+		lCampus.redraw();
 	}
 }

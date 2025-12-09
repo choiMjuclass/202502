@@ -20,5 +20,4 @@ public class LControlPanel extends JPanel {
 		this.add(this.rButton);
 	}
 
-
 }
